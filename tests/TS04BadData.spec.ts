@@ -31,5 +31,5 @@ test('Bad Data - mock API', async ({ page }) => {
   await expect(page.getByText('45')).toBeVisible();
 
   // Optional: check error message disappears
-  await expect(page.getByText('No user is over the age of 40')).not.toBeVisible();
+  await expect(page.getByText('Good job! Your assert code: ASSERTME')).toBeVisible();
 });

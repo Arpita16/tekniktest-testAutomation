@@ -46,7 +46,7 @@ const value = responseBody.startsWith('{')
   await page.getByLabel('Your Response').fill(value.trim());
   await page.getByRole('button', { name: 'Submit' }).click();
 
-  await expect(page.getByText('That is not the correct response')).not.toBeVisible();
+  await expect(page.getByText('Well done! : ASSERTME')).toBeVisible();
   // 11. Dispose context (cleanup)
  await apiContext.dispose();
 });
