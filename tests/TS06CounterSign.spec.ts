@@ -4,9 +4,11 @@ test('Countersign', async ({ page }) => {
 
   // 1. Create API context
   const apiContext = await playwrightRequest.newContext();
+ 
 
   // 2. Open page
   await page.goto('https://daedalus.janniskaranikis.dev/challenges/6-countersign');
+   await page.reload({ waitUntil: 'networkidle' });
 
   
 
@@ -27,17 +29,24 @@ test('Countersign', async ({ page }) => {
   // 6. Validate response
   expect(response.ok()).toBeTruthy();
 
-  // 7. Extract encrypted key
-  const encryptedKey = await response.text();
+   const responseBody = await response.text();
 
-  // 8. Fill in UI
-  await page.getByLabel('Your Response').fill(encryptedKey);
 
-  // 9. Submit
+  // 7. Extract key from response
+
+console.log('API response:', responseBody);
+
+const value = responseBody.startsWith('{')
+  ? JSON.parse(responseBody).key
+  : responseBody;
+    
+
+  // 8. Input key into UI and submit
+
+  await page.getByLabel('Your Response').fill(value.trim());
   await page.getByRole('button', { name: 'Submit' }).click();
 
-  // 10. Assert success (assert code appears or error message disappears)
-    expect(page.locator('text=That is not the correct response')).not.toBeVisible();
+  await expect(page.getByText('That is not the correct response')).not.toBeVisible();
   // 11. Dispose context (cleanup)
-  await apiContext.dispose();
+ await apiContext.dispose();
 });
