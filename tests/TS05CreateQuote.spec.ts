@@ -4,7 +4,7 @@ test('Create a quote', async ({ page }) => {
   await page.goto('https://daedalus.janniskaranikis.dev/challenges/5-create-a-quote');
 
   const quoteElement = page.locator('q.text-lg.italic');
-  await quoteElement.waitFor();
+  await quoteElement.waitFor({ state: 'visible' });
 
   // Read the target quote
   const quoteText = await quoteElement.innerText();
@@ -20,7 +20,8 @@ test('Create a quote', async ({ page }) => {
 
   for (const word of words) {
     // Find all matching draggable items in source
-    const elements = sourceArea.locator(`text="${word}"`);
+   const elements = sourceArea.locator(`text="${word}"`);
+
     const count = await elements.count();
 
     let dragged = false;//start dragging variable as false
@@ -35,6 +36,9 @@ test('Create a quote', async ({ page }) => {
       }
     }
   }
+
+  // Wait for all words to be dropped
+  await dropArea.locator('li').first().waitFor({ state: 'visible' });
 
   // assertion for success code appears
   const resultWords = await dropArea.locator('li').allTextContents();
