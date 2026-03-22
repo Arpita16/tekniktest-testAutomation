@@ -24,8 +24,7 @@ test('Bad Data - mock API', async ({ page }) => {
 
   await page.goto('https://daedalus.janniskaranikis.dev/challenges/4-bad-data');
 
-  // Navigate to "4. Bad Data"
-  await page.getByText('4. Bad Data').click();
+  await page.waitForLoadState('networkidle');
 
   // Assert that user with age ≥ 40 is now visible
   await expect(page.getByText('45')).toBeVisible();

@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test';
 
 test('Mr. Robot challenge', async ({ page }) => {
   await page.goto('https://daedalus.janniskaranikis.dev/challenges/3-mr-robot');
+ await page.waitForLoadState('networkidle');
 
-
-  await page.getByText('3. Mr. Robot').click();
+ 
 
   // find all buttons and click them the number of times indicated on the button
   const buttons = page.locator('button');

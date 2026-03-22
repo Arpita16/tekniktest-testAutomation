@@ -2,6 +2,7 @@ import { test, expect, Locator } from '@playwright/test';
 
 test('Create a quote', async ({ page }) => {
   await page.goto('https://daedalus.janniskaranikis.dev/challenges/5-create-a-quote');
+  await page.waitForLoadState('networkidle');
 
   const quoteElement = page.locator('q.text-lg.italic');
   await quoteElement.waitFor({ state: 'visible' });

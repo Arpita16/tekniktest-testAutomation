@@ -8,6 +8,8 @@ test('Countersign', async ({ page }) => {
 
   // 2. Open page
   await page.goto('https://daedalus.janniskaranikis.dev/challenges/6-countersign');
+
+  // 3. Wait for page to load and get passcode
    await page.reload({ waitUntil: 'networkidle' });
 
   
